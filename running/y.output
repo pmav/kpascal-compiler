@@ -1,0 +1,3212 @@
+Terminals which are not used
+
+   UMINUS
+   SLASH
+   DTCHAR
+   DTSTRING
+
+
+State 69 conflicts: 1 shift/reduce
+State 107 conflicts: 1 shift/reduce
+State 147 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: program_heading SEMICOLON program_block DOT
+
+    2 program_heading: PROGRAM var_name
+
+    3 program_block: VAR variable_declaration_part function_list PBEGIN statement_list END
+    4              | VAR variable_declaration_part PBEGIN statement_list END
+    5              | function_list PBEGIN statement_list END
+    6              | PBEGIN statement_list END
+
+    7 variable_declaration_part: variable_declaration
+    8                          | variable_declaration_part variable_declaration
+
+    9 variable_declaration: var_name_list COLON DTINTEGER SEMICOLON
+   10                     | var_name_list COLON DTBOOLEAN SEMICOLON
+   11                     | var_name_list COLON DTREAL SEMICOLON
+
+   12 var_name_list: var_name_list COMMA var_name
+   13              | var_name
+
+   14 function_list: function_list function
+   15              | function
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+
+   18 function_argument_list: function_argument_list SEMICOLON function_argument
+   19                       | function_argument
+   20                       | /* empty */
+
+   21 function_argument: var_name_list COLON function_return
+
+   22 function_return: DTINTEGER
+   23                | DTREAL
+   24                | DTBOOLEAN
+
+   25 statement_list: statement_list statement
+   26               | statement
+
+   27 statement: while_statement
+   28          | if_statement
+   29          | assignment_statement
+   30          | writeln_statement
+
+   31 while_statement: WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+
+   32 if_statement: IF logical_expression THEN statement
+   33             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | IF logical_expression THEN statement ELSE statement
+   35             | IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+
+   38 assignment_statement: var_name ASSIGNMENT expression SEMICOLON
+
+   39 function_call: var_name LPAREN function_call_argument_list RPAREN
+
+   40 function_call_argument_list: function_call_argument_list COMMA expression
+   41                            | expression
+   42                            | /* empty */
+
+   43 writeln_statement: WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+
+   44 writeln_argument_list: writeln_argument_list COMMA writeln_argument
+   45                      | writeln_argument
+
+   46 writeln_argument: string
+   47                 | expression
+
+   48 logical_expression: logical_expression AND logical_expression
+   49                   | logical_expression OR logical_expression
+   50                   | LPAREN logical_expression RPAREN
+   51                   | internal_logical_expression
+
+   52 internal_logical_expression: expression EQUAL expression
+   53                            | expression GT expression
+   54                            | expression LT expression
+   55                            | expression GE expression
+   56                            | expression LE expression
+   57                            | expression NOTEQUAL expression
+   58                            | expression
+
+   59 expression: expression PLUS expression
+   60           | expression MINUS expression
+   61           | expression DIV expression
+   62           | expression STAR expression
+   63           | expression MOD expression
+   64           | LPAREN expression RPAREN
+   65           | digit_sequence
+   66           | var_name
+   67           | function_call
+   68           | boolean_expression
+
+   69 boolean_expression: TRUE
+   70                   | FALSE
+
+   71 var_name: IDENTIFIER
+
+   72 digit_sequence: MINUS DIGSEQ
+   73               | DIGSEQ
+   74               | MINUS FDIGSEQ
+   75               | FDIGSEQ
+
+   76 string: STRING
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+EQUAL (258) 52
+PLUS (259) 59
+MINUS (260) 60 72 74
+MOD (261) 63
+DIV (262) 61
+STAR (263) 62
+OR (264) 49
+AND (265) 48
+UMINUS (266)
+PROGRAM (267) 2
+VAR (268) 3 4 16
+FUNCTION (269) 16 17
+ASSIGNMENT (270) 38
+IF (271) 32 33 34 35 36 37
+THEN (272) 32 33 34 35 36 37
+ELSE (273) 34 35 36 37
+WRITELN (274) 43
+WHILE (275) 31
+DO (276) 31
+DOT (277) 1
+PBEGIN (278) 3 4 5 6 16 17 31 33 35 36 37
+END (279) 3 4 5 6 16 17 31 33 35 36 37
+COLON (280) 9 10 11 16 17 21
+SEMICOLON (281) 1 9 10 11 16 17 18 31 33 35 36 37 38 43
+COMMA (282) 12 40 44
+SLASH (283)
+GE (284) 55
+GT (285) 53
+LE (286) 56
+LT (287) 54
+NOTEQUAL (288) 57
+LPAREN (289) 16 17 39 43 50 64
+RPAREN (290) 16 17 39 43 50 64
+DTINTEGER (291) 9 22
+DTBOOLEAN (292) 10 24
+DTCHAR (293)
+DTSTRING (294)
+DTREAL (295) 11 23
+TRUE (296) 69
+FALSE (297) 70
+STRING (298) 76
+IDENTIFIER (299) 71
+DIGSEQ (300) 72 73
+FDIGSEQ (301) 74 75
+
+
+Nonterminals, with rules where they appear
+
+$accept (47)
+    on left: 0
+program (48)
+    on left: 1, on right: 0
+program_heading (49)
+    on left: 2, on right: 1
+program_block (50)
+    on left: 3 4 5 6, on right: 1
+variable_declaration_part (51)
+    on left: 7 8, on right: 3 4 8 16
+variable_declaration (52)
+    on left: 9 10 11, on right: 7 8
+var_name_list (53)
+    on left: 12 13, on right: 9 10 11 12 21
+function_list (54)
+    on left: 14 15, on right: 3 5 14
+function (55)
+    on left: 16 17, on right: 14 15
+function_argument_list (56)
+    on left: 18 19 20, on right: 16 17 18
+function_argument (57)
+    on left: 21, on right: 18 19
+function_return (58)
+    on left: 22 23 24, on right: 16 17 21
+statement_list (59)
+    on left: 25 26, on right: 3 4 5 6 16 17 25 31 33 35 36 37
+statement (60)
+    on left: 27 28 29 30, on right: 25 26 32 34 35 36
+while_statement (61)
+    on left: 31, on right: 27
+if_statement (62)
+    on left: 32 33 34 35 36 37, on right: 28
+assignment_statement (63)
+    on left: 38, on right: 29
+function_call (64)
+    on left: 39, on right: 67
+function_call_argument_list (65)
+    on left: 40 41 42, on right: 39 40
+writeln_statement (66)
+    on left: 43, on right: 30
+writeln_argument_list (67)
+    on left: 44 45, on right: 43 44
+writeln_argument (68)
+    on left: 46 47, on right: 44 45
+logical_expression (69)
+    on left: 48 49 50 51, on right: 31 32 33 34 35 36 37 48 49 50
+internal_logical_expression (70)
+    on left: 52 53 54 55 56 57 58, on right: 51
+expression (71)
+    on left: 59 60 61 62 63 64 65 66 67 68, on right: 38 40 41 47 52
+    53 54 55 56 57 58 59 60 61 62 63 64
+boolean_expression (72)
+    on left: 69 70, on right: 68
+var_name (73)
+    on left: 71, on right: 2 12 13 16 17 38 39 66
+digit_sequence (74)
+    on left: 72 73 74 75, on right: 65
+string (75)
+    on left: 76, on right: 46
+
+
+state 0
+
+    0 $accept: . program $end
+    1 program: . program_heading SEMICOLON program_block DOT
+    2 program_heading: . PROGRAM var_name
+
+    PROGRAM  shift, and go to state 1
+
+    program          go to state 2
+    program_heading  go to state 3
+
+
+state 1
+
+    2 program_heading: PROGRAM . var_name
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    var_name  go to state 5
+
+
+state 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 6
+
+
+state 3
+
+    1 program: program_heading . SEMICOLON program_block DOT
+
+    SEMICOLON  shift, and go to state 7
+
+
+state 4
+
+   71 var_name: IDENTIFIER .
+
+    $default  reduce using rule 71 (var_name)
+
+
+state 5
+
+    2 program_heading: PROGRAM var_name .
+
+    $default  reduce using rule 2 (program_heading)
+
+
+state 6
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 7
+
+    1 program: program_heading SEMICOLON . program_block DOT
+    3 program_block: . VAR variable_declaration_part function_list PBEGIN statement_list END
+    4              | . VAR variable_declaration_part PBEGIN statement_list END
+    5              | . function_list PBEGIN statement_list END
+    6              | . PBEGIN statement_list END
+   14 function_list: . function_list function
+   15              | . function
+   16 function: . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+
+    VAR       shift, and go to state 8
+    FUNCTION  shift, and go to state 9
+    PBEGIN    shift, and go to state 10
+
+    program_block  go to state 11
+    function_list  go to state 12
+    function       go to state 13
+
+
+state 8
+
+    3 program_block: VAR . variable_declaration_part function_list PBEGIN statement_list END
+    4              | VAR . variable_declaration_part PBEGIN statement_list END
+    7 variable_declaration_part: . variable_declaration
+    8                          | . variable_declaration_part variable_declaration
+    9 variable_declaration: . var_name_list COLON DTINTEGER SEMICOLON
+   10                     | . var_name_list COLON DTBOOLEAN SEMICOLON
+   11                     | . var_name_list COLON DTREAL SEMICOLON
+   12 var_name_list: . var_name_list COMMA var_name
+   13              | . var_name
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    variable_declaration_part  go to state 14
+    variable_declaration       go to state 15
+    var_name_list              go to state 16
+    var_name                   go to state 17
+
+
+state 9
+
+   16 function: FUNCTION . var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION . var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    var_name  go to state 18
+
+
+state 10
+
+    6 program_block: PBEGIN . statement_list END
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 22
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 11
+
+    1 program: program_heading SEMICOLON program_block . DOT
+
+    DOT  shift, and go to state 29
+
+
+state 12
+
+    5 program_block: function_list . PBEGIN statement_list END
+   14 function_list: function_list . function
+   16 function: . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+
+    FUNCTION  shift, and go to state 9
+    PBEGIN    shift, and go to state 30
+
+    function  go to state 31
+
+
+state 13
+
+   15 function_list: function .
+
+    $default  reduce using rule 15 (function_list)
+
+
+state 14
+
+    3 program_block: VAR variable_declaration_part . function_list PBEGIN statement_list END
+    4              | VAR variable_declaration_part . PBEGIN statement_list END
+    8 variable_declaration_part: variable_declaration_part . variable_declaration
+    9 variable_declaration: . var_name_list COLON DTINTEGER SEMICOLON
+   10                     | . var_name_list COLON DTBOOLEAN SEMICOLON
+   11                     | . var_name_list COLON DTREAL SEMICOLON
+   12 var_name_list: . var_name_list COMMA var_name
+   13              | . var_name
+   14 function_list: . function_list function
+   15              | . function
+   16 function: . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    FUNCTION    shift, and go to state 9
+    PBEGIN      shift, and go to state 32
+    IDENTIFIER  shift, and go to state 4
+
+    variable_declaration  go to state 33
+    var_name_list         go to state 16
+    function_list         go to state 34
+    function              go to state 13
+    var_name              go to state 17
+
+
+state 15
+
+    7 variable_declaration_part: variable_declaration .
+
+    $default  reduce using rule 7 (variable_declaration_part)
+
+
+state 16
+
+    9 variable_declaration: var_name_list . COLON DTINTEGER SEMICOLON
+   10                     | var_name_list . COLON DTBOOLEAN SEMICOLON
+   11                     | var_name_list . COLON DTREAL SEMICOLON
+   12 var_name_list: var_name_list . COMMA var_name
+
+    COLON  shift, and go to state 35
+    COMMA  shift, and go to state 36
+
+
+state 17
+
+   13 var_name_list: var_name .
+
+    $default  reduce using rule 13 (var_name_list)
+
+
+state 18
+
+   16 function: FUNCTION var_name . LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name . LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+
+    LPAREN  shift, and go to state 37
+
+
+state 19
+
+   32 if_statement: IF . logical_expression THEN statement
+   33             | IF . logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | IF . logical_expression THEN statement ELSE statement
+   35             | IF . logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | IF . logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | IF . logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   48 logical_expression: . logical_expression AND logical_expression
+   49                   | . logical_expression OR logical_expression
+   50                   | . LPAREN logical_expression RPAREN
+   51                   | . internal_logical_expression
+   52 internal_logical_expression: . expression EQUAL expression
+   53                            | . expression GT expression
+   54                            | . expression LT expression
+   55                            | . expression GE expression
+   56                            | . expression LE expression
+   57                            | . expression NOTEQUAL expression
+   58                            | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 39
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call                go to state 44
+    logical_expression           go to state 45
+    internal_logical_expression  go to state 46
+    expression                   go to state 47
+    boolean_expression           go to state 48
+    var_name                     go to state 49
+    digit_sequence               go to state 50
+
+
+state 20
+
+   43 writeln_statement: WRITELN . LPAREN writeln_argument_list RPAREN SEMICOLON
+
+    LPAREN  shift, and go to state 51
+
+
+state 21
+
+   31 while_statement: WHILE . logical_expression DO PBEGIN statement_list END SEMICOLON
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   48 logical_expression: . logical_expression AND logical_expression
+   49                   | . logical_expression OR logical_expression
+   50                   | . LPAREN logical_expression RPAREN
+   51                   | . internal_logical_expression
+   52 internal_logical_expression: . expression EQUAL expression
+   53                            | . expression GT expression
+   54                            | . expression LT expression
+   55                            | . expression GE expression
+   56                            | . expression LE expression
+   57                            | . expression NOTEQUAL expression
+   58                            | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 39
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call                go to state 44
+    logical_expression           go to state 52
+    internal_logical_expression  go to state 46
+    expression                   go to state 47
+    boolean_expression           go to state 48
+    var_name                     go to state 49
+    digit_sequence               go to state 50
+
+
+state 22
+
+    6 program_block: PBEGIN statement_list . END
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 53
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 23
+
+   26 statement_list: statement .
+
+    $default  reduce using rule 26 (statement_list)
+
+
+state 24
+
+   27 statement: while_statement .
+
+    $default  reduce using rule 27 (statement)
+
+
+state 25
+
+   28 statement: if_statement .
+
+    $default  reduce using rule 28 (statement)
+
+
+state 26
+
+   29 statement: assignment_statement .
+
+    $default  reduce using rule 29 (statement)
+
+
+state 27
+
+   30 statement: writeln_statement .
+
+    $default  reduce using rule 30 (statement)
+
+
+state 28
+
+   38 assignment_statement: var_name . ASSIGNMENT expression SEMICOLON
+
+    ASSIGNMENT  shift, and go to state 55
+
+
+state 29
+
+    1 program: program_heading SEMICOLON program_block DOT .
+
+    $default  reduce using rule 1 (program)
+
+
+state 30
+
+    5 program_block: function_list PBEGIN . statement_list END
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 56
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 31
+
+   14 function_list: function_list function .
+
+    $default  reduce using rule 14 (function_list)
+
+
+state 32
+
+    4 program_block: VAR variable_declaration_part PBEGIN . statement_list END
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 57
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 33
+
+    8 variable_declaration_part: variable_declaration_part variable_declaration .
+
+    $default  reduce using rule 8 (variable_declaration_part)
+
+
+state 34
+
+    3 program_block: VAR variable_declaration_part function_list . PBEGIN statement_list END
+   14 function_list: function_list . function
+   16 function: . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | . FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+
+    FUNCTION  shift, and go to state 9
+    PBEGIN    shift, and go to state 58
+
+    function  go to state 31
+
+
+state 35
+
+    9 variable_declaration: var_name_list COLON . DTINTEGER SEMICOLON
+   10                     | var_name_list COLON . DTBOOLEAN SEMICOLON
+   11                     | var_name_list COLON . DTREAL SEMICOLON
+
+    DTINTEGER  shift, and go to state 59
+    DTBOOLEAN  shift, and go to state 60
+    DTREAL     shift, and go to state 61
+
+
+state 36
+
+   12 var_name_list: var_name_list COMMA . var_name
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    var_name  go to state 62
+
+
+state 37
+
+   12 var_name_list: . var_name_list COMMA var_name
+   13              | . var_name
+   16 function: FUNCTION var_name LPAREN . function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN . function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+   18 function_argument_list: . function_argument_list SEMICOLON function_argument
+   19                       | . function_argument
+   20                       | .  [SEMICOLON, RPAREN]
+   21 function_argument: . var_name_list COLON function_return
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    $default  reduce using rule 20 (function_argument_list)
+
+    var_name_list           go to state 63
+    function_argument_list  go to state 64
+    function_argument       go to state 65
+    var_name                go to state 17
+
+
+state 38
+
+   72 digit_sequence: MINUS . DIGSEQ
+   74               | MINUS . FDIGSEQ
+
+    DIGSEQ   shift, and go to state 66
+    FDIGSEQ  shift, and go to state 67
+
+
+state 39
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   48 logical_expression: . logical_expression AND logical_expression
+   49                   | . logical_expression OR logical_expression
+   50                   | . LPAREN logical_expression RPAREN
+   50                   | LPAREN . logical_expression RPAREN
+   51                   | . internal_logical_expression
+   52 internal_logical_expression: . expression EQUAL expression
+   53                            | . expression GT expression
+   54                            | . expression LT expression
+   55                            | . expression GE expression
+   56                            | . expression LE expression
+   57                            | . expression NOTEQUAL expression
+   58                            | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   64           | LPAREN . expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 39
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call                go to state 44
+    logical_expression           go to state 68
+    internal_logical_expression  go to state 46
+    expression                   go to state 69
+    boolean_expression           go to state 48
+    var_name                     go to state 49
+    digit_sequence               go to state 50
+
+
+state 40
+
+   69 boolean_expression: TRUE .
+
+    $default  reduce using rule 69 (boolean_expression)
+
+
+state 41
+
+   70 boolean_expression: FALSE .
+
+    $default  reduce using rule 70 (boolean_expression)
+
+
+state 42
+
+   73 digit_sequence: DIGSEQ .
+
+    $default  reduce using rule 73 (digit_sequence)
+
+
+state 43
+
+   75 digit_sequence: FDIGSEQ .
+
+    $default  reduce using rule 75 (digit_sequence)
+
+
+state 44
+
+   67 expression: function_call .
+
+    $default  reduce using rule 67 (expression)
+
+
+state 45
+
+   32 if_statement: IF logical_expression . THEN statement
+   33             | IF logical_expression . THEN PBEGIN statement_list END SEMICOLON
+   34             | IF logical_expression . THEN statement ELSE statement
+   35             | IF logical_expression . THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | IF logical_expression . THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | IF logical_expression . THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   48 logical_expression: logical_expression . AND logical_expression
+   49                   | logical_expression . OR logical_expression
+
+    OR    shift, and go to state 70
+    AND   shift, and go to state 71
+    THEN  shift, and go to state 72
+
+
+state 46
+
+   51 logical_expression: internal_logical_expression .
+
+    $default  reduce using rule 51 (logical_expression)
+
+
+state 47
+
+   52 internal_logical_expression: expression . EQUAL expression
+   53                            | expression . GT expression
+   54                            | expression . LT expression
+   55                            | expression . GE expression
+   56                            | expression . LE expression
+   57                            | expression . NOTEQUAL expression
+   58                            | expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    EQUAL     shift, and go to state 73
+    PLUS      shift, and go to state 74
+    MINUS     shift, and go to state 75
+    MOD       shift, and go to state 76
+    DIV       shift, and go to state 77
+    STAR      shift, and go to state 78
+    GE        shift, and go to state 79
+    GT        shift, and go to state 80
+    LE        shift, and go to state 81
+    LT        shift, and go to state 82
+    NOTEQUAL  shift, and go to state 83
+
+    $default  reduce using rule 58 (internal_logical_expression)
+
+
+state 48
+
+   68 expression: boolean_expression .
+
+    $default  reduce using rule 68 (expression)
+
+
+state 49
+
+   39 function_call: var_name . LPAREN function_call_argument_list RPAREN
+   66 expression: var_name .  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+
+    LPAREN  shift, and go to state 84
+
+    $default  reduce using rule 66 (expression)
+
+
+state 50
+
+   65 expression: digit_sequence .
+
+    $default  reduce using rule 65 (expression)
+
+
+state 51
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   43 writeln_statement: WRITELN LPAREN . writeln_argument_list RPAREN SEMICOLON
+   44 writeln_argument_list: . writeln_argument_list COMMA writeln_argument
+   45                      | . writeln_argument
+   46 writeln_argument: . string
+   47                 | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+   76 string: . STRING
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    STRING      shift, and go to state 86
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call          go to state 44
+    writeln_argument_list  go to state 87
+    writeln_argument       go to state 88
+    expression             go to state 89
+    boolean_expression     go to state 48
+    var_name               go to state 49
+    digit_sequence         go to state 50
+    string                 go to state 90
+
+
+state 52
+
+   31 while_statement: WHILE logical_expression . DO PBEGIN statement_list END SEMICOLON
+   48 logical_expression: logical_expression . AND logical_expression
+   49                   | logical_expression . OR logical_expression
+
+    OR   shift, and go to state 70
+    AND  shift, and go to state 71
+    DO   shift, and go to state 91
+
+
+state 53
+
+    6 program_block: PBEGIN statement_list END .
+
+    $default  reduce using rule 6 (program_block)
+
+
+state 54
+
+   25 statement_list: statement_list statement .
+
+    $default  reduce using rule 25 (statement_list)
+
+
+state 55
+
+   38 assignment_statement: var_name ASSIGNMENT . expression SEMICOLON
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 92
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 56
+
+    5 program_block: function_list PBEGIN statement_list . END
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 93
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 57
+
+    4 program_block: VAR variable_declaration_part PBEGIN statement_list . END
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 94
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 58
+
+    3 program_block: VAR variable_declaration_part function_list PBEGIN . statement_list END
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 95
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 59
+
+    9 variable_declaration: var_name_list COLON DTINTEGER . SEMICOLON
+
+    SEMICOLON  shift, and go to state 96
+
+
+state 60
+
+   10 variable_declaration: var_name_list COLON DTBOOLEAN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 97
+
+
+state 61
+
+   11 variable_declaration: var_name_list COLON DTREAL . SEMICOLON
+
+    SEMICOLON  shift, and go to state 98
+
+
+state 62
+
+   12 var_name_list: var_name_list COMMA var_name .
+
+    $default  reduce using rule 12 (var_name_list)
+
+
+state 63
+
+   12 var_name_list: var_name_list . COMMA var_name
+   21 function_argument: var_name_list . COLON function_return
+
+    COLON  shift, and go to state 99
+    COMMA  shift, and go to state 36
+
+
+state 64
+
+   16 function: FUNCTION var_name LPAREN function_argument_list . RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN function_argument_list . RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+   18 function_argument_list: function_argument_list . SEMICOLON function_argument
+
+    SEMICOLON  shift, and go to state 100
+    RPAREN     shift, and go to state 101
+
+
+state 65
+
+   19 function_argument_list: function_argument .
+
+    $default  reduce using rule 19 (function_argument_list)
+
+
+state 66
+
+   72 digit_sequence: MINUS DIGSEQ .
+
+    $default  reduce using rule 72 (digit_sequence)
+
+
+state 67
+
+   74 digit_sequence: MINUS FDIGSEQ .
+
+    $default  reduce using rule 74 (digit_sequence)
+
+
+state 68
+
+   48 logical_expression: logical_expression . AND logical_expression
+   49                   | logical_expression . OR logical_expression
+   50                   | LPAREN logical_expression . RPAREN
+
+    OR      shift, and go to state 70
+    AND     shift, and go to state 71
+    RPAREN  shift, and go to state 102
+
+
+state 69
+
+   52 internal_logical_expression: expression . EQUAL expression
+   53                            | expression . GT expression
+   54                            | expression . LT expression
+   55                            | expression . GE expression
+   56                            | expression . LE expression
+   57                            | expression . NOTEQUAL expression
+   58                            | expression .  [OR, AND, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+   64           | LPAREN expression . RPAREN
+
+    EQUAL     shift, and go to state 73
+    PLUS      shift, and go to state 74
+    MINUS     shift, and go to state 75
+    MOD       shift, and go to state 76
+    DIV       shift, and go to state 77
+    STAR      shift, and go to state 78
+    GE        shift, and go to state 79
+    GT        shift, and go to state 80
+    LE        shift, and go to state 81
+    LT        shift, and go to state 82
+    NOTEQUAL  shift, and go to state 83
+    RPAREN    shift, and go to state 103
+
+    RPAREN    [reduce using rule 58 (internal_logical_expression)]
+    $default  reduce using rule 58 (internal_logical_expression)
+
+
+state 70
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   48 logical_expression: . logical_expression AND logical_expression
+   49                   | . logical_expression OR logical_expression
+   49                   | logical_expression OR . logical_expression
+   50                   | . LPAREN logical_expression RPAREN
+   51                   | . internal_logical_expression
+   52 internal_logical_expression: . expression EQUAL expression
+   53                            | . expression GT expression
+   54                            | . expression LT expression
+   55                            | . expression GE expression
+   56                            | . expression LE expression
+   57                            | . expression NOTEQUAL expression
+   58                            | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 39
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call                go to state 44
+    logical_expression           go to state 104
+    internal_logical_expression  go to state 46
+    expression                   go to state 47
+    boolean_expression           go to state 48
+    var_name                     go to state 49
+    digit_sequence               go to state 50
+
+
+state 71
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   48 logical_expression: . logical_expression AND logical_expression
+   48                   | logical_expression AND . logical_expression
+   49                   | . logical_expression OR logical_expression
+   50                   | . LPAREN logical_expression RPAREN
+   51                   | . internal_logical_expression
+   52 internal_logical_expression: . expression EQUAL expression
+   53                            | . expression GT expression
+   54                            | . expression LT expression
+   55                            | . expression GE expression
+   56                            | . expression LE expression
+   57                            | . expression NOTEQUAL expression
+   58                            | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 39
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call                go to state 44
+    logical_expression           go to state 105
+    internal_logical_expression  go to state 46
+    expression                   go to state 47
+    boolean_expression           go to state 48
+    var_name                     go to state 49
+    digit_sequence               go to state 50
+
+
+state 72
+
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   32             | IF logical_expression THEN . statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   33             | IF logical_expression THEN . PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   34             | IF logical_expression THEN . statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   35             | IF logical_expression THEN . statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   36             | IF logical_expression THEN . PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   37             | IF logical_expression THEN . PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    PBEGIN      shift, and go to state 106
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 107
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 73
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   52 internal_logical_expression: expression EQUAL . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 108
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 74
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   59           | expression PLUS . expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 109
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 75
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   60           | expression MINUS . expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 110
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 76
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   63           | expression MOD . expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 111
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 77
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   61           | expression DIV . expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 112
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 78
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   62           | expression STAR . expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 113
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 79
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   55 internal_logical_expression: expression GE . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 114
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 80
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   53 internal_logical_expression: expression GT . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 115
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 81
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   56 internal_logical_expression: expression LE . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 116
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 82
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   54 internal_logical_expression: expression LT . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 117
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 83
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   57 internal_logical_expression: expression NOTEQUAL . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 118
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 84
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   39              | var_name LPAREN . function_call_argument_list RPAREN
+   40 function_call_argument_list: . function_call_argument_list COMMA expression
+   41                            | . expression
+   42                            | .  [COMMA, RPAREN]
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    $default  reduce using rule 42 (function_call_argument_list)
+
+    function_call                go to state 44
+    function_call_argument_list  go to state 119
+    expression                   go to state 120
+    boolean_expression           go to state 48
+    var_name                     go to state 49
+    digit_sequence               go to state 50
+
+
+state 85
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   64           | LPAREN . expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 121
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 86
+
+   76 string: STRING .
+
+    $default  reduce using rule 76 (string)
+
+
+state 87
+
+   43 writeln_statement: WRITELN LPAREN writeln_argument_list . RPAREN SEMICOLON
+   44 writeln_argument_list: writeln_argument_list . COMMA writeln_argument
+
+    COMMA   shift, and go to state 122
+    RPAREN  shift, and go to state 123
+
+
+state 88
+
+   45 writeln_argument_list: writeln_argument .
+
+    $default  reduce using rule 45 (writeln_argument_list)
+
+
+state 89
+
+   47 writeln_argument: expression .  [COMMA, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 47 (writeln_argument)
+
+
+state 90
+
+   46 writeln_argument: string .
+
+    $default  reduce using rule 46 (writeln_argument)
+
+
+state 91
+
+   31 while_statement: WHILE logical_expression DO . PBEGIN statement_list END SEMICOLON
+
+    PBEGIN  shift, and go to state 124
+
+
+state 92
+
+   38 assignment_statement: var_name ASSIGNMENT expression . SEMICOLON
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS       shift, and go to state 74
+    MINUS      shift, and go to state 75
+    MOD        shift, and go to state 76
+    DIV        shift, and go to state 77
+    STAR       shift, and go to state 78
+    SEMICOLON  shift, and go to state 125
+
+
+state 93
+
+    5 program_block: function_list PBEGIN statement_list END .
+
+    $default  reduce using rule 5 (program_block)
+
+
+state 94
+
+    4 program_block: VAR variable_declaration_part PBEGIN statement_list END .
+
+    $default  reduce using rule 4 (program_block)
+
+
+state 95
+
+    3 program_block: VAR variable_declaration_part function_list PBEGIN statement_list . END
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 126
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 96
+
+    9 variable_declaration: var_name_list COLON DTINTEGER SEMICOLON .
+
+    $default  reduce using rule 9 (variable_declaration)
+
+
+state 97
+
+   10 variable_declaration: var_name_list COLON DTBOOLEAN SEMICOLON .
+
+    $default  reduce using rule 10 (variable_declaration)
+
+
+state 98
+
+   11 variable_declaration: var_name_list COLON DTREAL SEMICOLON .
+
+    $default  reduce using rule 11 (variable_declaration)
+
+
+state 99
+
+   21 function_argument: var_name_list COLON . function_return
+   22 function_return: . DTINTEGER
+   23                | . DTREAL
+   24                | . DTBOOLEAN
+
+    DTINTEGER  shift, and go to state 127
+    DTBOOLEAN  shift, and go to state 128
+    DTREAL     shift, and go to state 129
+
+    function_return  go to state 130
+
+
+state 100
+
+   12 var_name_list: . var_name_list COMMA var_name
+   13              | . var_name
+   18 function_argument_list: function_argument_list SEMICOLON . function_argument
+   21 function_argument: . var_name_list COLON function_return
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    var_name_list      go to state 63
+    function_argument  go to state 131
+    var_name           go to state 17
+
+
+state 101
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN . COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN function_argument_list RPAREN . COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+
+    COLON  shift, and go to state 132
+
+
+state 102
+
+   50 logical_expression: LPAREN logical_expression RPAREN .
+
+    $default  reduce using rule 50 (logical_expression)
+
+
+state 103
+
+   64 expression: LPAREN expression RPAREN .
+
+    $default  reduce using rule 64 (expression)
+
+
+state 104
+
+   48 logical_expression: logical_expression . AND logical_expression
+   49                   | logical_expression . OR logical_expression  [OR, AND, THEN, DO, RPAREN]
+   49                   | logical_expression OR logical_expression .  [OR, AND, THEN, DO, RPAREN]
+
+    $default  reduce using rule 49 (logical_expression)
+
+    Conflict between rule 49 and token OR resolved as reduce (%left OR).
+    Conflict between rule 49 and token AND resolved as reduce (%left AND).
+
+
+state 105
+
+   48 logical_expression: logical_expression . AND logical_expression  [OR, AND, THEN, DO, RPAREN]
+   48                   | logical_expression AND logical_expression .  [OR, AND, THEN, DO, RPAREN]
+   49                   | logical_expression . OR logical_expression
+
+    $default  reduce using rule 48 (logical_expression)
+
+    Conflict between rule 48 and token OR resolved as reduce (%left OR).
+    Conflict between rule 48 and token AND resolved as reduce (%left AND).
+
+
+state 106
+
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   33             | IF logical_expression THEN PBEGIN . statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   36             | IF logical_expression THEN PBEGIN . statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   37             | IF logical_expression THEN PBEGIN . statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 133
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 107
+
+   32 if_statement: IF logical_expression THEN statement .  [IF, ELSE, WRITELN, WHILE, END, IDENTIFIER]
+   34             | IF logical_expression THEN statement . ELSE statement
+   35             | IF logical_expression THEN statement . ELSE PBEGIN statement_list END SEMICOLON
+
+    ELSE  shift, and go to state 134
+
+    ELSE      [reduce using rule 32 (if_statement)]
+    $default  reduce using rule 32 (if_statement)
+
+
+state 108
+
+   52 internal_logical_expression: expression EQUAL expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 52 (internal_logical_expression)
+
+
+state 109
+
+   59 expression: expression . PLUS expression  [EQUAL, PLUS, MINUS, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   59           | expression PLUS expression .  [EQUAL, PLUS, MINUS, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    MOD   shift, and go to state 76
+    DIV   shift, and go to state 77
+    STAR  shift, and go to state 78
+
+    $default  reduce using rule 59 (expression)
+
+    Conflict between rule 59 and token PLUS resolved as reduce (%left PLUS).
+    Conflict between rule 59 and token MINUS resolved as reduce (%left MINUS).
+    Conflict between rule 59 and token MOD resolved as shift (PLUS < MOD).
+    Conflict between rule 59 and token DIV resolved as shift (PLUS < DIV).
+    Conflict between rule 59 and token STAR resolved as shift (PLUS < STAR).
+
+
+state 110
+
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression  [EQUAL, PLUS, MINUS, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   60           | expression MINUS expression .  [EQUAL, PLUS, MINUS, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    MOD   shift, and go to state 76
+    DIV   shift, and go to state 77
+    STAR  shift, and go to state 78
+
+    $default  reduce using rule 60 (expression)
+
+    Conflict between rule 60 and token PLUS resolved as reduce (%left PLUS).
+    Conflict between rule 60 and token MINUS resolved as reduce (%left MINUS).
+    Conflict between rule 60 and token MOD resolved as shift (MINUS < MOD).
+    Conflict between rule 60 and token DIV resolved as shift (MINUS < DIV).
+    Conflict between rule 60 and token STAR resolved as shift (MINUS < STAR).
+
+
+state 111
+
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   63           | expression MOD expression .  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+
+    $default  reduce using rule 63 (expression)
+
+    Conflict between rule 63 and token PLUS resolved as reduce (PLUS < MOD).
+    Conflict between rule 63 and token MINUS resolved as reduce (MINUS < MOD).
+    Conflict between rule 63 and token MOD resolved as reduce (%left MOD).
+    Conflict between rule 63 and token DIV resolved as reduce (%left DIV).
+    Conflict between rule 63 and token STAR resolved as reduce (%left STAR).
+
+
+state 112
+
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   61           | expression DIV expression .  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    $default  reduce using rule 61 (expression)
+
+    Conflict between rule 61 and token PLUS resolved as reduce (PLUS < DIV).
+    Conflict between rule 61 and token MINUS resolved as reduce (MINUS < DIV).
+    Conflict between rule 61 and token MOD resolved as reduce (%left MOD).
+    Conflict between rule 61 and token DIV resolved as reduce (%left DIV).
+    Conflict between rule 61 and token STAR resolved as reduce (%left STAR).
+
+
+state 113
+
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   62           | expression STAR expression .  [EQUAL, PLUS, MINUS, MOD, DIV, STAR, OR, AND, THEN, DO, SEMICOLON, COMMA, GE, GT, LE, LT, NOTEQUAL, RPAREN]
+   63           | expression . MOD expression
+
+    $default  reduce using rule 62 (expression)
+
+    Conflict between rule 62 and token PLUS resolved as reduce (PLUS < STAR).
+    Conflict between rule 62 and token MINUS resolved as reduce (MINUS < STAR).
+    Conflict between rule 62 and token MOD resolved as reduce (%left MOD).
+    Conflict between rule 62 and token DIV resolved as reduce (%left DIV).
+    Conflict between rule 62 and token STAR resolved as reduce (%left STAR).
+
+
+state 114
+
+   55 internal_logical_expression: expression GE expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 55 (internal_logical_expression)
+
+
+state 115
+
+   53 internal_logical_expression: expression GT expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 53 (internal_logical_expression)
+
+
+state 116
+
+   56 internal_logical_expression: expression LE expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 56 (internal_logical_expression)
+
+
+state 117
+
+   54 internal_logical_expression: expression LT expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 54 (internal_logical_expression)
+
+
+state 118
+
+   57 internal_logical_expression: expression NOTEQUAL expression .  [OR, AND, THEN, DO, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 57 (internal_logical_expression)
+
+
+state 119
+
+   39 function_call: var_name LPAREN function_call_argument_list . RPAREN
+   40 function_call_argument_list: function_call_argument_list . COMMA expression
+
+    COMMA   shift, and go to state 135
+    RPAREN  shift, and go to state 136
+
+
+state 120
+
+   41 function_call_argument_list: expression .  [COMMA, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 41 (function_call_argument_list)
+
+
+state 121
+
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+   64           | LPAREN expression . RPAREN
+
+    PLUS    shift, and go to state 74
+    MINUS   shift, and go to state 75
+    MOD     shift, and go to state 76
+    DIV     shift, and go to state 77
+    STAR    shift, and go to state 78
+    RPAREN  shift, and go to state 103
+
+
+state 122
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   44 writeln_argument_list: writeln_argument_list COMMA . writeln_argument
+   46 writeln_argument: . string
+   47                 | . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+   76 string: . STRING
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    STRING      shift, and go to state 86
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    writeln_argument    go to state 137
+    expression          go to state 89
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+    string              go to state 90
+
+
+state 123
+
+   43 writeln_statement: WRITELN LPAREN writeln_argument_list RPAREN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 138
+
+
+state 124
+
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   31                | WHILE logical_expression DO PBEGIN . statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 139
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 125
+
+   38 assignment_statement: var_name ASSIGNMENT expression SEMICOLON .
+
+    $default  reduce using rule 38 (assignment_statement)
+
+
+state 126
+
+    3 program_block: VAR variable_declaration_part function_list PBEGIN statement_list END .
+
+    $default  reduce using rule 3 (program_block)
+
+
+state 127
+
+   22 function_return: DTINTEGER .
+
+    $default  reduce using rule 22 (function_return)
+
+
+state 128
+
+   24 function_return: DTBOOLEAN .
+
+    $default  reduce using rule 24 (function_return)
+
+
+state 129
+
+   23 function_return: DTREAL .
+
+    $default  reduce using rule 23 (function_return)
+
+
+state 130
+
+   21 function_argument: var_name_list COLON function_return .
+
+    $default  reduce using rule 21 (function_argument)
+
+
+state 131
+
+   18 function_argument_list: function_argument_list SEMICOLON function_argument .
+
+    $default  reduce using rule 18 (function_argument_list)
+
+
+state 132
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON . function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN function_argument_list RPAREN COLON . function_return SEMICOLON PBEGIN statement_list END SEMICOLON
+   22 function_return: . DTINTEGER
+   23                | . DTREAL
+   24                | . DTBOOLEAN
+
+    DTINTEGER  shift, and go to state 127
+    DTBOOLEAN  shift, and go to state 128
+    DTREAL     shift, and go to state 129
+
+    function_return  go to state 140
+
+
+state 133
+
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   33             | IF logical_expression THEN PBEGIN statement_list . END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   36             | IF logical_expression THEN PBEGIN statement_list . END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   37             | IF logical_expression THEN PBEGIN statement_list . END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 141
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 134
+
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   34             | IF logical_expression THEN statement ELSE . statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   35             | IF logical_expression THEN statement ELSE . PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    PBEGIN      shift, and go to state 142
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 143
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 135
+
+   39 function_call: . var_name LPAREN function_call_argument_list RPAREN
+   40 function_call_argument_list: function_call_argument_list COMMA . expression
+   59 expression: . expression PLUS expression
+   60           | . expression MINUS expression
+   61           | . expression DIV expression
+   62           | . expression STAR expression
+   63           | . expression MOD expression
+   64           | . LPAREN expression RPAREN
+   65           | . digit_sequence
+   66           | . var_name
+   67           | . function_call
+   68           | . boolean_expression
+   69 boolean_expression: . TRUE
+   70                   | . FALSE
+   71 var_name: . IDENTIFIER
+   72 digit_sequence: . MINUS DIGSEQ
+   73               | . DIGSEQ
+   74               | . MINUS FDIGSEQ
+   75               | . FDIGSEQ
+
+    MINUS       shift, and go to state 38
+    LPAREN      shift, and go to state 85
+    TRUE        shift, and go to state 40
+    FALSE       shift, and go to state 41
+    IDENTIFIER  shift, and go to state 4
+    DIGSEQ      shift, and go to state 42
+    FDIGSEQ     shift, and go to state 43
+
+    function_call       go to state 44
+    expression          go to state 144
+    boolean_expression  go to state 48
+    var_name            go to state 49
+    digit_sequence      go to state 50
+
+
+state 136
+
+   39 function_call: var_name LPAREN function_call_argument_list RPAREN .
+
+    $default  reduce using rule 39 (function_call)
+
+
+state 137
+
+   44 writeln_argument_list: writeln_argument_list COMMA writeln_argument .
+
+    $default  reduce using rule 44 (writeln_argument_list)
+
+
+state 138
+
+   43 writeln_statement: WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON .
+
+    $default  reduce using rule 43 (writeln_statement)
+
+
+state 139
+
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   31                | WHILE logical_expression DO PBEGIN statement_list . END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 145
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 140
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return . SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return . SEMICOLON PBEGIN statement_list END SEMICOLON
+
+    SEMICOLON  shift, and go to state 146
+
+
+state 141
+
+   33 if_statement: IF logical_expression THEN PBEGIN statement_list END . SEMICOLON
+   36             | IF logical_expression THEN PBEGIN statement_list END . SEMICOLON ELSE statement
+   37             | IF logical_expression THEN PBEGIN statement_list END . SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+
+    SEMICOLON  shift, and go to state 147
+
+
+state 142
+
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   35             | IF logical_expression THEN statement ELSE PBEGIN . statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 148
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 143
+
+   34 if_statement: IF logical_expression THEN statement ELSE statement .
+
+    $default  reduce using rule 34 (if_statement)
+
+
+state 144
+
+   40 function_call_argument_list: function_call_argument_list COMMA expression .  [COMMA, RPAREN]
+   59 expression: expression . PLUS expression
+   60           | expression . MINUS expression
+   61           | expression . DIV expression
+   62           | expression . STAR expression
+   63           | expression . MOD expression
+
+    PLUS   shift, and go to state 74
+    MINUS  shift, and go to state 75
+    MOD    shift, and go to state 76
+    DIV    shift, and go to state 77
+    STAR   shift, and go to state 78
+
+    $default  reduce using rule 40 (function_call_argument_list)
+
+
+state 145
+
+   31 while_statement: WHILE logical_expression DO PBEGIN statement_list END . SEMICOLON
+
+    SEMICOLON  shift, and go to state 149
+
+
+state 146
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON . VAR variable_declaration_part PBEGIN statement_list END SEMICOLON
+   17         | FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON . PBEGIN statement_list END SEMICOLON
+
+    VAR     shift, and go to state 150
+    PBEGIN  shift, and go to state 151
+
+
+state 147
+
+   33 if_statement: IF logical_expression THEN PBEGIN statement_list END SEMICOLON .  [IF, ELSE, WRITELN, WHILE, END, IDENTIFIER]
+   36             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON . ELSE statement
+   37             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON . ELSE PBEGIN statement_list END SEMICOLON
+
+    ELSE  shift, and go to state 152
+
+    ELSE      [reduce using rule 33 (if_statement)]
+    $default  reduce using rule 33 (if_statement)
+
+
+state 148
+
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   35             | IF logical_expression THEN statement ELSE PBEGIN statement_list . END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 153
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 149
+
+   31 while_statement: WHILE logical_expression DO PBEGIN statement_list END SEMICOLON .
+
+    $default  reduce using rule 31 (while_statement)
+
+
+state 150
+
+    7 variable_declaration_part: . variable_declaration
+    8                          | . variable_declaration_part variable_declaration
+    9 variable_declaration: . var_name_list COLON DTINTEGER SEMICOLON
+   10                     | . var_name_list COLON DTBOOLEAN SEMICOLON
+   11                     | . var_name_list COLON DTREAL SEMICOLON
+   12 var_name_list: . var_name_list COMMA var_name
+   13              | . var_name
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR . variable_declaration_part PBEGIN statement_list END SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 4
+
+    variable_declaration_part  go to state 154
+    variable_declaration       go to state 15
+    var_name_list              go to state 16
+    var_name                   go to state 17
+
+
+state 151
+
+   17 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN . statement_list END SEMICOLON
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 155
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 152
+
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   36             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE . statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   37             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE . PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    PBEGIN      shift, and go to state 156
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 157
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 153
+
+   35 if_statement: IF logical_expression THEN statement ELSE PBEGIN statement_list END . SEMICOLON
+
+    SEMICOLON  shift, and go to state 158
+
+
+state 154
+
+    8 variable_declaration_part: variable_declaration_part . variable_declaration
+    9 variable_declaration: . var_name_list COLON DTINTEGER SEMICOLON
+   10                     | . var_name_list COLON DTBOOLEAN SEMICOLON
+   11                     | . var_name_list COLON DTREAL SEMICOLON
+   12 var_name_list: . var_name_list COMMA var_name
+   13              | . var_name
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part . PBEGIN statement_list END SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    PBEGIN      shift, and go to state 159
+    IDENTIFIER  shift, and go to state 4
+
+    variable_declaration  go to state 33
+    var_name_list         go to state 16
+    var_name              go to state 17
+
+
+state 155
+
+   17 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list . END SEMICOLON
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 160
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 156
+
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   37             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN . statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 161
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 157
+
+   36 if_statement: IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement .
+
+    $default  reduce using rule 36 (if_statement)
+
+
+state 158
+
+   35 if_statement: IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON .
+
+    $default  reduce using rule 35 (if_statement)
+
+
+state 159
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN . statement_list END SEMICOLON
+   25 statement_list: . statement_list statement
+   26               | . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    IDENTIFIER  shift, and go to state 4
+
+    statement_list        go to state 162
+    statement             go to state 23
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 160
+
+   17 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END . SEMICOLON
+
+    SEMICOLON  shift, and go to state 163
+
+
+state 161
+
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   37             | IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list . END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 164
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 162
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list . END SEMICOLON
+   25 statement_list: statement_list . statement
+   27 statement: . while_statement
+   28          | . if_statement
+   29          | . assignment_statement
+   30          | . writeln_statement
+   31 while_statement: . WHILE logical_expression DO PBEGIN statement_list END SEMICOLON
+   32 if_statement: . IF logical_expression THEN statement
+   33             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON
+   34             | . IF logical_expression THEN statement ELSE statement
+   35             | . IF logical_expression THEN statement ELSE PBEGIN statement_list END SEMICOLON
+   36             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE statement
+   37             | . IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON
+   38 assignment_statement: . var_name ASSIGNMENT expression SEMICOLON
+   43 writeln_statement: . WRITELN LPAREN writeln_argument_list RPAREN SEMICOLON
+   71 var_name: . IDENTIFIER
+
+    IF          shift, and go to state 19
+    WRITELN     shift, and go to state 20
+    WHILE       shift, and go to state 21
+    END         shift, and go to state 165
+    IDENTIFIER  shift, and go to state 4
+
+    statement             go to state 54
+    while_statement       go to state 24
+    if_statement          go to state 25
+    assignment_statement  go to state 26
+    writeln_statement     go to state 27
+    var_name              go to state 28
+
+
+state 163
+
+   17 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON PBEGIN statement_list END SEMICOLON .
+
+    $default  reduce using rule 17 (function)
+
+
+state 164
+
+   37 if_statement: IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END . SEMICOLON
+
+    SEMICOLON  shift, and go to state 166
+
+
+state 165
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END . SEMICOLON
+
+    SEMICOLON  shift, and go to state 167
+
+
+state 166
+
+   37 if_statement: IF logical_expression THEN PBEGIN statement_list END SEMICOLON ELSE PBEGIN statement_list END SEMICOLON .
+
+    $default  reduce using rule 37 (if_statement)
+
+
+state 167
+
+   16 function: FUNCTION var_name LPAREN function_argument_list RPAREN COLON function_return SEMICOLON VAR variable_declaration_part PBEGIN statement_list END SEMICOLON .
+
+    $default  reduce using rule 16 (function)

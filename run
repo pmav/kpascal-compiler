@@ -1,0 +1,29 @@
+rm running/*
+lex -o running/lex.yy.c pascal.l
+yacc --report=all --verbose -o running/y.tab.c -d pascal.y
+gcc -o running/compiler running/y.tab.c running/lex.yy.c
+
+
+if [ -f running/compiler ] # Prevent code errors
+then
+
+    echo
+    echo "--- Compiling Code ----------------------------------------------------------------------------------"
+    echo
+    ./running/compiler < $1
+
+
+    if [ -f running/result.c ] # Prevent compiling errors
+    then
+        echo
+        #echo "--- Generated Code -----------------------------------------------------------------------------------"
+        #echo
+        #cat running/result.c
+        gcc -o running/result running/result.c
+        echo "--- Result -------------------------------------------------------------------------------------------"
+        ./running/result
+    else
+        echo
+    fi
+
+fi

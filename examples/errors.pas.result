@@ -1,0 +1,69 @@
+Lista de erros e avisos gerados pelo program anterior (errors.pas).
+
+Syntax...: 0 errors
+ERROR at line 4: symbol 'i' already defined!
+ERROR at line 11: symbol 'i' not declared!
+ERROR at line 12: function 'test()' doesn't have a return statement (test := <value>)!
+ERROR at line 31: symbol 'z' not declared!
+WARNING at line 34: symbol '1.500000' is not Integer! (Precision loss)
+ERROR at line 35: symbol 'true' is not Integer!
+WARNING at line 37: symbol 'r' is not Integer! (Precision loss)
+ERROR at line 38: symbol 'b' is being assign to Integer but is Boolean!
+ERROR at line 39: symbol 'z' not declared!
+ERROR at line 43: symbol 'true' is not Real!
+ERROR at line 46: symbol 'b' is being assign to Real but is Boolean!
+ERROR at line 48: can't assign Integer to Boolean!
+ERROR at line 49: can't assign Real to Boolean!
+ERROR at line 51: symbol 'i' is being assign to Boolean but is Integer!
+ERROR at line 52: symbol 'r' is being assign to Boolean but is Real!
+WARNING at line 55: symbol '1.500000' is not Integer! (Precision loss)
+WARNING at line 56: symbol '1.500000' is not Integer! (Precision loss)
+ERROR at line 56: symbol 'true' is not Integer!
+WARNING at line 57: symbol 'r' is not Integer! (Precision loss)
+ERROR at line 57: symbol 'b' is being assign to Integer but is Boolean!
+ERROR at line 57: symbol 'z' not declared!
+ERROR at line 60: symbol 'true' is not Real!
+ERROR at line 61: symbol 'b' is being assign to Real but is Boolean!
+ERROR at line 63: can't assign Integer to Boolean!
+ERROR at line 63: can't assign Real to Boolean!
+ERROR at line 64: can't assign Integer to Boolean!
+ERROR at line 64: can't assign Real to Boolean!
+ERROR at line 65: symbol 'i' is being assign to Boolean but is Integer!
+ERROR at line 65: symbol 'r' is being assign to Boolean but is Real!
+WARNING at line 68: mixing data types, '1.500000' (Real) with Integer at expression level!
+ERROR at line 69: mixing data types, Boolean with Integer at expression level!
+WARNING at line 71: mixing data types, 'r' Real with Integer at expression level!
+ERROR at line 72: mixing data types, 'b' Boolean with Integer at expression level!
+ERROR at line 73: symbol 'z' not declared!
+ERROR at line 74: symbol 'z' not declared!
+ERROR at line 78: mixing data types, Boolean with Real at expression level!
+ERROR at line 81: mixing data types, 'b' Boolean with Real at expression level!
+ERROR at line 82: symbol 'z' not declared!
+ERROR at line 84: mixing data types, Boolean with Integer at expression level!
+ERROR at line 85: mixing data types, Boolean with Real at expression level!
+ERROR at line 87: mixing data types, 'i' Integer with Boolean at expression level!
+ERROR at line 88: mixing data types, 'r' Real with Boolean at expression level!
+ERROR at line 90: symbol 'z' not declared!
+ERROR at line 94: mixing data types, Integer with Boolean at logical level!
+ERROR at line 97: mixing data types, Integer with Boolean at logical level!
+ERROR at line 98: symbol 'z' not declared!
+ERROR at line 102: mixing data types, Real with Boolean at logical level!
+ERROR at line 105: mixing data types, Real with Boolean at logical level!
+ERROR at line 106: symbol 'z' not declared!
+ERROR at line 108: mixing data types, Boolean with Integer at logical level!
+ERROR at line 109: mixing data types, Boolean with Real at logical level!
+ERROR at line 111: mixing data types, Boolean with Integer at logical level!
+ERROR at line 112: mixing data types, Boolean with Real at logical level!
+ERROR at line 114: symbol 'z' not declared!
+WARNING at line 117: symbol 'rtest' is not Integer! (Precision loss)
+WARNING at line 117: mixing data types, 'rtest()' return Real but is being assign to Integer!
+ERROR at line 118: function 'btest()' is being assign to Integer but is Boolean!
+ERROR at line 122: function 'btest()' is being assign to Real but is Boolean!
+ERROR at line 124: function 'itest()' is being assign to Boolean but is Integer!
+ERROR at line 125: function 'rtest()' is being assign to Boolean but is Real!
+ERROR at line 128: argument #1 of 'itest()' must be Integer but is Real!
+ERROR at line 128: wrong number of arguments, 'itest()' needs 3, 2 provided! 
+ERROR at line 129: argument #2 of 'rtest()' must be Real but is Boolean!
+ERROR at line 129: wrong number of arguments, 'rtest()' needs 3, 2 provided! 
+ERROR at line 130: wrong number of arguments, 'btest()' needs 3, 2 provided! 
+Semantic.: 56 errors

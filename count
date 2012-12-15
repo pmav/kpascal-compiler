@@ -1,0 +1,1 @@
+find pascal.l pascal.y functions/* semantics/* symbol_table/* translate/* | xargs wc -l
